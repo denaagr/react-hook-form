@@ -1,4 +1,7 @@
 import ReactDOM from 'react-dom';
 import "bootstrap/dist/css/bootstrap.css";
+import Skill from './skill';
 
-ReactDOM.render(<div>hello</div>,document.getElementById("root"));
+
+
+ReactDOM.render(<Skill/>,document.getElementById("root"));
