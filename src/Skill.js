@@ -4,18 +4,22 @@ import { useForm } from 'react-hook-form';
 const Skill = () => {
     //at the top of the component define variables.(define a array of skills)
     const [skills, setSkills] = useState([]);
+    const [loadData,setLoadData]=useState(false);
+
     useEffect(()=>{
+        //console.log("tessstttt");
         //call API then get skills list then set it into the skill list(next lecture) here use hardcode
-        const mySkills=[{id:'A1',title:'Java'}, {id:'A2',title:'Java script'}];
-        setSkills(mySkills);
-    },[])
+        //const mySkills=[{id:'A1',title:'Java'}, {id:'A2',title:'Java script'}];
+        //setSkills(mySkills);
+    },[loadData]);
 
 
     //creat 2 sub components ShowData & Form
     //1
     const ShowData = (props) => {
         return (
-            <Fragment>{props.skills.map(skill => ( //skills => [ {1,JavaSE}, {2, Java EE}]//skil  avalin object list skills hast
+            <Fragment>
+                {props.skills.map(skill => ( //skills => [ {1,JavaSE}, {2, Java EE}]//skil  avalin object list skills hast
                 <ul className="row pb=2" key={skill.id}>
                     <li className="form-lable">{skill.title}</li>
 
@@ -30,8 +34,19 @@ const Skill = () => {
     const Form = () =>{
         const { register,handleSubmit,formState:{errors}}=useForm();
         //create a function inside the form
+         
         const saveData=(data)=>{
+            console.log("-----------");
             console.log(data);
+            console.log("-----------");
+            const id='A'+Math.random().toString(36).substr(2,9);//create random Id
+            const title=data.title; 
+            const skill={id,title};
+            skills.push(skill);
+            
+            setLoadData(!loadData);//not false
+            console.log("skills:",skills);
+
  };
     //map useForm to myForm-- Form component return HTML form 
     //map input to useForm using register line 45
@@ -42,7 +57,7 @@ const Skill = () => {
             <form onSubmit={handleSubmit(saveData)}>
                 <div className="row">
                     <div className="col">
-                        <input type="text" className="form-control"{ ...register("title,{required:true}") }placeholder="Enter title"/>
+                        <input type="text" className="form-control"{ ...register("title",{required:true}) }placeholder="Enter title"/>
                         {errors.title &&<span className="text-danger">title is required</span>}
 
                     </div>
